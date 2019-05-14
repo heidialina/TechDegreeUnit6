@@ -80,7 +80,7 @@ const checkLetter = (clicked) => {
 // Add an event listener to the keyboard. ONLY BUTTON! Make chosen class. 
 // Pass the button to the checkLetter function, and store the letter returned inside of a variable called letterFound.
 
-const tries = document.querySelectorAll('.tries');
+const tries = document.getElementsByClassName('tries');
 
 
 qwerty.addEventListener('click', (event) => {
@@ -99,14 +99,24 @@ qwerty.addEventListener('click', (event) => {
 // Create a checkWin function.
 //Each time the player guesses a letter, this function will check whether the game has been won or lost. At the very end of the keyboard event listener, you’ll run this function to check if the number of letters with class “show” is equal to the number of letters with class “letters”. If they’re equal, show the overlay screen with the “win” class and appropriate text. Otherwise, if the number of misses is equal to or greater than 5, show the overlay screen with the “lose” class and appropriate text.
 
-const shown = document.querySelectorAll('.show');
+const shown = document.getElementsByClassName('show');
 
 const checkWin = () => {
 	if (letters.length === shown.length) {
 		overlay.style.display = 'flex';
 		overlay.className = 'win';
+		startGame.textContent = 'Go again?'
 		} else if (missed >= 5) {
 			overlay.style.display = 'flex';
 			overlay.className = 'lose';
+			startGame.textContent = 'Try again?';
 	}
+	
+	const resetButton = document.querySelector('.btn__reset');
+	const reset = () => {
+	document.location.reload ();
 };
+
+resetButton.addEventListener('click', reset);
+};
+
