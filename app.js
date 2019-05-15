@@ -4,6 +4,8 @@
 
 const qwerty = document.querySelector('#qwerty');
 const phrase = document.querySelector('#phrase ul');
+const tries = document.getElementsByClassName('tries');
+const phraseUl = phrase.querySelector('ul');
 let missed = 0; 
 
 // Create a phrases array that contains at least 5 different phrases as strings.
@@ -20,10 +22,6 @@ const phrases = [
 
 const startGame = document.querySelector('.btn__reset');
 const overlay = document.querySelector('#overlay');
-
-startGame.addEventListener('click', () => {
-	overlay.style.display = 'none';
-});
 
 startGame.addEventListener('mouseover', () => {
 	startGame.style.cursor = 'pointer';
@@ -59,7 +57,7 @@ const addPhraseToDisplay = (arr) => {
 };
 
 const phraseArray = getRandomPhraseAsArray(phrases);
-addPhraseToDisplay(phraseArray); 
+addPhraseToDisplay(phraseArray);
 
 // Create a checkLetter function.
 
@@ -80,8 +78,6 @@ const checkLetter = (clicked) => {
 // Add an event listener to the keyboard. ONLY BUTTON! Make chosen class. 
 // Pass the button to the checkLetter function, and store the letter returned inside of a variable called letterFound.
 
-const tries = document.getElementsByClassName('tries');
-
 
 qwerty.addEventListener('click', (event) => {
 	if (event.target.tagName === 'BUTTON') {
@@ -90,7 +86,7 @@ qwerty.addEventListener('click', (event) => {
 		const letterFound = checkLetter(event.target);
 		if (letterFound === null) {
 			missed += 1;
-			tries[missed -1].firstChild.hidden = 'true';
+			tries[tries.length - missed].firstChild.src = 'images/lostHeart.png';
 			}	
 		}
 	checkWin();
@@ -111,12 +107,23 @@ const checkWin = () => {
 			overlay.className = 'lose';
 			startGame.textContent = 'Try again?';
 	}
-	
-	const resetButton = document.querySelector('.btn__reset');
-	const reset = () => {
-	document.location.reload ();
 };
 
-resetButton.addEventListener('click', reset);
-};
+// reset game
 
+startGame.addEventListener('click', () => {
+	missed = 0;
+	for (let i = 0; i < tries.length; i += 1) {
+		tries[i].firstChild.src = 'images/liveHeart.png';
+	}
+	const buttons = qwerty.getElementsByTagName('button');
+	for (let i = 0; i < buttons.length; i += 1) {
+		buttons[i].className = '';
+		buttons[i].disabled = false;
+	}
+	overlay.style.display = 'none';
+	phraseUl.innerHTML = ' ';
+	const phraseArray = getRandomPhraseAsArray(phrases);
+	addPhraseToDisplay(phraseArray); 
+
+});
