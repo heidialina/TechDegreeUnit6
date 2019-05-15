@@ -5,7 +5,6 @@
 const qwerty = document.querySelector('#qwerty');
 const phrase = document.querySelector('#phrase ul');
 const tries = document.getElementsByClassName('tries');
-const phraseUl = phrase.querySelector('ul');
 let missed = 0; 
 
 // Create a phrases array that contains at least 5 different phrases as strings.
@@ -44,6 +43,7 @@ getRandomPhraseAsArray(phrases);
 // If the character in the array is a letter and not a space, the function should add the class “letter” to the list item.
 
 const addPhraseToDisplay = (arr) => {
+	phrase.innerHTML = ' ';
 	for (let i = 0; i < arr.length; i++) {
 		let letter = document.createElement('li');
 		letter.innerHTML = arr[i];
@@ -53,7 +53,7 @@ const addPhraseToDisplay = (arr) => {
 			} else {
 				letter.className = 'space';
 			}
-	}
+	} 
 };
 
 const phraseArray = getRandomPhraseAsArray(phrases);
@@ -61,7 +61,7 @@ addPhraseToDisplay(phraseArray);
 
 // Create a checkLetter function.
 
-const letters = document.querySelectorAll('.letter');
+const letters = document.getElementsByClassName('letter');
 
 const checkLetter = (clicked) => {
 	let match = null; 
@@ -122,7 +122,6 @@ startGame.addEventListener('click', () => {
 		buttons[i].disabled = false;
 	}
 	overlay.style.display = 'none';
-	phraseUl.innerHTML = ' ';
 	const phraseArray = getRandomPhraseAsArray(phrases);
 	addPhraseToDisplay(phraseArray); 
 
